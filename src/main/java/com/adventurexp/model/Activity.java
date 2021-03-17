@@ -12,7 +12,7 @@ public class Activity {
 
     private String actName;
     private String actDescription;
-    private String actInstructor;
+    private String employeeId;
 
     public Activity() {
     }
@@ -21,7 +21,7 @@ public class Activity {
         this.actId = actId;
         this.actName = actName;
         this.actDescription = actDescription;
-        this.actInstructor = actInstructor;
+        this.employeeId = actInstructor;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Activity {
                 "id=" + actId +
                 ", activityName='" + actName + '\'' +
                 ", activityDescription='" + actDescription + '\'' +
-                ", instructor='" + actInstructor + '\'' +
+                ", instructor='" + employeeId + '\'' +
                 '}';
     }
 
@@ -58,12 +58,12 @@ public class Activity {
         this.actDescription = activityDescription;
     }
 
-    public String getActInstructor() {
-        return actInstructor;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setActInstructor(String instructor) {
-        this.actInstructor = instructor;
+    public void setEmployeeId(String instructor) {
+        this.employeeId = instructor;
     }
 }
 

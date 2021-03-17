@@ -25,7 +25,7 @@ public class ActivityRestController {
 
     @GetMapping("/activities")
     public List<Activity> findAllActivity() {
-        List<Activity> activity = new ArrayList<>();
+        List<Activity> activity;
         activity = activityRepository.findAll();
         return activity;
     }
