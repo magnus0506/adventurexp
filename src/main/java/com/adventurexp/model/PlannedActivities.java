@@ -17,7 +17,6 @@ public class PlannedActivities {
 
 
     @ManyToOne
-    @JsonBackReference
     private Activity activity;
 
 
@@ -27,11 +26,11 @@ public class PlannedActivities {
 
     @Override
     public String toString() {
-        return "PlannedActivities{" +
-                "calendarId=" + plannedId +
-                ", calendarDate='" + plannedDate + '\'' +
-                ", participantCount=" + participantCount +
-                ", activity=" + activity +
+        return "PlannedActivities{\n" +
+                "planned id= " + plannedId + '\n' +
+                "activity date= '" + plannedDate + '\n' +
+                "participantCount=" + participantCount + '\n' +
+                "activity=" + activity + '\n' +
                 '}';
     }
 

@@ -15,10 +15,10 @@ import java.util.Optional;
 public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
-    private final PlannedRepository calendarRepository;
+    private final PlannedRepository plannedRepository;
 
-    public ActivityRestController(ActivityRepository activityRepository, PlannedRepository calendarRepository) {
-       this.calendarRepository = calendarRepository;
+    public ActivityRestController(ActivityRepository activityRepository, PlannedRepository plannedRepository) {
+       this.plannedRepository = plannedRepository;
         this.activityRepository = activityRepository;
 
     }
@@ -33,11 +33,8 @@ public class ActivityRestController {
     @GetMapping("/activities/planned")
     public List<PlannedActivities> findAllPlannedActivity() {
         List<PlannedActivities> plannedActivitiesList;
-        plannedActivitiesList = calendarRepository.findAll();
-        plannedActivitiesList.forEach(act -> System.out.println(
-                "activity id= " + act.getActivity().getActId() +
-                " activity name= " + act.getActivity().getActName() +
-                " act desc=" + act.getActivity().getActDescription()));
+        plannedActivitiesList = plannedRepository.findAll();
+
         return plannedActivitiesList;
     }
 
@@ -57,7 +54,7 @@ public class ActivityRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public PlannedActivities postActivity(@RequestBody PlannedActivities activity) {
         System.out.println(activity);
-        return calendarRepository.save(activity);
+        return plannedRepository.save(activity);
     }
 }
 
