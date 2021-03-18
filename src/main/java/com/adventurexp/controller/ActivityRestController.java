@@ -1,6 +1,5 @@
 package com.adventurexp.controller;
 
-
 import com.adventurexp.model.Activity;
 import com.adventurexp.model.Calendar;
 import com.adventurexp.repository.CalendarRepository;
@@ -52,7 +51,6 @@ public class ActivityRestController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PostMapping(value = "/newact", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
