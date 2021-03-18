@@ -16,6 +16,7 @@ public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
     private final CalendarRepository calendarRepository;
+
     public ActivityRestController(ActivityRepository activityRepository, CalendarRepository calendarRepository) {
        this.calendarRepository = calendarRepository;
         this.activityRepository = activityRepository;
@@ -29,7 +30,7 @@ public class ActivityRestController {
         return activity;
     }
 
-    @GetMapping("/activities/planned")
+    @GetMapping(value = "/calendar")
     public List<Calendar> findAllPlannedActivity() {
         List<Calendar> calendarList;
         calendarList = calendarRepository.findAll();
