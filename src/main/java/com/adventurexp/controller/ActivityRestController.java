@@ -1,7 +1,7 @@
 package com.adventurexp.controller;
 
 import com.adventurexp.model.Activity;
-import com.adventurexp.model.Calendar;
+import com.adventurexp.model.PlannedActivities;
 import com.adventurexp.repository.CalendarRepository;
 import com.adventurexp.repository.ActivityRepository;
 import org.springframework.http.HttpStatus;
@@ -30,9 +30,9 @@ public class ActivityRestController {
         return activity;
     }
 
-    @GetMapping("/calendar")
-    public List<Calendar> findAllPlannedActivity() {
-        List<Calendar> calendarList;
+    @GetMapping("/activities/planned")
+    public List<PlannedActivities> findAllPlannedActivity() {
+        List<PlannedActivities> calendarList;
         calendarList = calendarRepository.findAll();
         calendarList.forEach(act -> System.out.println(
                 "activity id= " + act.getActivity().getActId() +
@@ -55,7 +55,7 @@ public class ActivityRestController {
 
     @PostMapping(value = "/newact", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Calendar postActivity(@RequestBody Calendar activity) {
+    public PlannedActivities postActivity(@RequestBody PlannedActivities activity) {
         System.out.println(activity);
         return calendarRepository.save(activity);
     }
