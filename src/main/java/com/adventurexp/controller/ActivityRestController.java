@@ -2,12 +2,13 @@ package com.adventurexp.controller;
 
 
 import com.adventurexp.model.Activity;
+import com.adventurexp.model.Calendar;
+import com.adventurexp.repository.CalendarRepository;
 import com.adventurexp.repository.ActivityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +16,11 @@ import java.util.Optional;
 public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
-
-    public ActivityRestController(ActivityRepository activityRepository) {
-        //, PublisherRepository publisherRepository, AuthorRepository authorRepository) {
+    private final CalendarRepository calendarRepository;
+    public ActivityRestController(ActivityRepository activityRepository, CalendarRepository calendarRepository) {
+       this.calendarRepository = calendarRepository;
         this.activityRepository = activityRepository;
-        //this.publisherRepository = publisherRepository;
-        //this.authorRepository = authorRepository;
+
     }
 
     @GetMapping("/activities")
@@ -30,8 +30,18 @@ public class ActivityRestController {
         return activity;
     }
 
+    @GetMapping("/activities/planned")
+    public List<Calendar> findAllPlannedActivity() {
+        List<Calendar> calendarList;
+        calendarList = calendarRepository.findAll();
+        calendarList.forEach(act -> System.out.println(
+                "activity id= " + act.getActivity().getActId() +
+                " activity name= " + act.getActivity().getActName() +
+                " act desc=" + act.getActivity().getActDescription()));
+        return calendarList;
+    }
 
-    // activity
+
     @GetMapping("/activities/{act_id}")
     public ResponseEntity<Activity> findActivityById(@PathVariable Long act_id) {
         Optional<Activity> activity = activityRepository.findById(act_id);
@@ -43,16 +53,12 @@ public class ActivityRestController {
         }
     }
 
-    // new activity
 
     @PostMapping(value = "/newact", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Activity postActivity(@RequestBody Activity activity) {
+    public Calendar postActivity(@RequestBody Calendar activity) {
         System.out.println(activity);
-        return activityRepository.save(activity);
-
-
+        return calendarRepository.save(activity);
     }
-
 }
 
