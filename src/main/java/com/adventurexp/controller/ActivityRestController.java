@@ -2,7 +2,7 @@ package com.adventurexp.controller;
 
 import com.adventurexp.model.Activity;
 import com.adventurexp.model.PlannedActivities;
-import com.adventurexp.repository.CalendarRepository;
+import com.adventurexp.repository.PlannedRepository;
 import com.adventurexp.repository.ActivityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import java.util.Optional;
 public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
-    private final CalendarRepository calendarRepository;
+    private final PlannedRepository calendarRepository;
 
-    public ActivityRestController(ActivityRepository activityRepository, CalendarRepository calendarRepository) {
+    public ActivityRestController(ActivityRepository activityRepository, PlannedRepository calendarRepository) {
        this.calendarRepository = calendarRepository;
         this.activityRepository = activityRepository;
 
@@ -32,13 +32,13 @@ public class ActivityRestController {
 
     @GetMapping("/activities/planned")
     public List<PlannedActivities> findAllPlannedActivity() {
-        List<PlannedActivities> calendarList;
-        calendarList = calendarRepository.findAll();
-        calendarList.forEach(act -> System.out.println(
+        List<PlannedActivities> plannedActivitiesList;
+        plannedActivitiesList = calendarRepository.findAll();
+        plannedActivitiesList.forEach(act -> System.out.println(
                 "activity id= " + act.getActivity().getActId() +
                 " activity name= " + act.getActivity().getActName() +
                 " act desc=" + act.getActivity().getActDescription()));
-        return calendarList;
+        return plannedActivitiesList;
     }
 
 

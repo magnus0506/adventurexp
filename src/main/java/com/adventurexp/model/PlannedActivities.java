@@ -15,6 +15,7 @@ public class PlannedActivities {
     private String plannedDate;
     private int participantCount;
 
+
     @ManyToOne
     @JsonBackReference
     private Activity activity;
