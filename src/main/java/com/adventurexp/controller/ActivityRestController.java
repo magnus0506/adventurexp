@@ -30,7 +30,7 @@ public class ActivityRestController {
         return activity;
     }
 
-    @GetMapping(value = "/calendar")
+    @GetMapping("/calendar")
     public List<Calendar> findAllPlannedActivity() {
         List<Calendar> calendarList;
         calendarList = calendarRepository.findAll();
