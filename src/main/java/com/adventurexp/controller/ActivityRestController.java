@@ -61,15 +61,15 @@ public class ActivityRestController {
     }
 
 
-    @PostMapping(value = "/booking/new", consumes = "application/json")
+    @PostMapping(value = "/newbooking", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Booking postActivity(@RequestBody Booking activity) {
+    public Booking newBooking(@RequestBody Booking activity) {
         return bookingRepository.save(activity);
     }
 
-    @PostMapping(value = "/activities/new", consumes = "application/json")
+    @PostMapping(value = "/newactivity", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Activity postActivity(@RequestBody Activity activity) {
+    public Activity newActivity(@RequestBody Activity activity) {
         return activityRepository.save(activity);
     }
 
