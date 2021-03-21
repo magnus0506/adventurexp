@@ -17,7 +17,7 @@ public class Activity {
     private String employeeId;
 
     @OneToMany
-    @JoinColumn(name = "activity_act_id")
+    @JoinColumn(name = "activity_act_Id")
     private Set<Booking> plannedActivities = new HashSet<>();
 
     public Activity() {
