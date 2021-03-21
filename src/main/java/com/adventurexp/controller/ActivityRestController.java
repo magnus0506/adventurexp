@@ -1,8 +1,8 @@
 package com.adventurexp.controller;
 
 import com.adventurexp.model.Activity;
-import com.adventurexp.model.PlannedActivities;
-import com.adventurexp.repository.PlannedRepository;
+import com.adventurexp.model.Booking;
+import com.adventurexp.repository.BookingRepository;
 import com.adventurexp.repository.ActivityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import java.util.Optional;
 public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
-    private final PlannedRepository plannedRepository;
+    private final BookingRepository bookingRepository;
 
-    public ActivityRestController(ActivityRepository activityRepository, PlannedRepository plannedRepository) {
-       this.plannedRepository = plannedRepository;
+    public ActivityRestController(ActivityRepository activityRepository, BookingRepository bookingRepository) {
+       this.bookingRepository = bookingRepository;
         this.activityRepository = activityRepository;
 
     }
@@ -30,12 +30,11 @@ public class ActivityRestController {
         return activity;
     }
 
-    @GetMapping("/activities/planned")
-    public List<PlannedActivities> findAllPlannedActivity() {
-        List<PlannedActivities> plannedActivitiesList;
-        plannedActivitiesList = plannedRepository.findAll();
-
-        return plannedActivitiesList;
+    @GetMapping("/booking")
+    public List<Booking> findAllBookings() {
+        List<Booking> bookingList;
+        bookingList = bookingRepository.findAll();
+        return bookingList;
     }
 
 
@@ -50,11 +49,30 @@ public class ActivityRestController {
         }
     }
 
-    @PostMapping(value = "/newact", consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public PlannedActivities postActivity(@RequestBody PlannedActivities activity) {
-        System.out.println(activity);
-        return plannedRepository.save(activity);
+    @GetMapping("/booking/{act_id}")
+    public ResponseEntity<Booking> findBookedActivity(@PathVariable Long act_id) {
+        Optional<Booking> booking = bookingRepository.findById(act_id);
+        if (booking.isPresent()) {
+            Booking booking1 = booking.get();
+            return new ResponseEntity<>(booking1, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
+
+
+    @PostMapping(value = "/booking/new", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Booking postActivity(@RequestBody Booking activity) {
+        return bookingRepository.save(activity);
+    }
+
+    @PostMapping(value = "/activities/new", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Activity postActivity(@RequestBody Activity activity) {
+        return activityRepository.save(activity);
+    }
+
+
 }
 

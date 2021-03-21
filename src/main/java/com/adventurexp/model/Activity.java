@@ -1,5 +1,7 @@
 package com.adventurexp.model;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -13,6 +15,10 @@ public class Activity {
     private String actName;
     private String actDescription;
     private String employeeId;
+
+    @OneToMany
+    @JoinColumn(name = "activity_act_id")
+    private Set<Booking> plannedActivities = new HashSet<>();
 
     public Activity() {
     }
