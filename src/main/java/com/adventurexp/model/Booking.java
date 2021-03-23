@@ -1,9 +1,7 @@
 package com.adventurexp.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "booking")
@@ -11,42 +9,29 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booking_id")
     private Long bookingId;
 
-    private String bookingDate;
+    @Column(name = "booking_date")
+    private Date bookingDate;
+
+    @Column(name = "participant_count")
     private int participantCount;
 
     @ManyToOne
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "actId")
+    @JoinColumn(name = "act_id")
     private Activity activity;
-
-
-    public Booking() {
-    }
-
 
     public Long getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(Long calendarId) {
-        this.bookingId = calendarId;
-    }
-
-    public String getBookingDate() {
+    public Date getBookingDate() {
         return bookingDate;
-    }
-
-    public void setBookingDate(String calendarDate) {
-        this.bookingDate = calendarDate;
     }
 
     public int getParticipantCount() {
         return participantCount;
-    }
-
-    public void setParticipantCount(int participantCount) {
-        this.participantCount = participantCount;
     }
 
     public Activity getActivity() {

@@ -1,4 +1,7 @@
 package com.adventurexp.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,66 +13,49 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "act_id")
     private Long actId;
 
+    @Column(name = "act_name")
     private String actName;
+
+    @Column(name = "act_description")
     private String actDescription;
-    private String employeeId;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id", insertable = false, updatable = false)
+    private Employee employee;
 
     @OneToMany
-    @JoinColumn(name = "activity_act_Id")
-    private Set<Booking> plannedActivities = new HashSet<>();
+    @JoinColumn(name = "act_id")
+    @JsonIgnore
+    private Set<Booking> bookings = new HashSet<>();
 
     public Activity() {
-    }
-
-    public Activity(Long actId, String actName, String actDescription, String actInstructor) {
-        this.actId = actId;
-        this.actName = actName;
-        this.actDescription = actDescription;
-        this.employeeId = actInstructor;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "id=" + actId +
-                ", activityName='" + actName + '\'' +
-                ", activityDescription='" + actDescription + '\'' +
-                ", instructor='" + employeeId + '\'' +
-                '}';
     }
 
     public Long getActId() {
         return actId;
     }
 
-    public void setActId(Long id) {
-        this.actId = id;
-    }
-
     public String getActName() {
         return actName;
-    }
-
-    public void setActName(String activityName) {
-        this.actName = activityName;
     }
 
     public String getActDescription() {
         return actDescription;
     }
 
-    public void setActDescription(String activityDescription) {
-        this.actDescription = activityDescription;
+    public String getEmployee() {
+        return employee.getEmployeeFirstname();
     }
 
-    public String getEmployeeId() {
-        return employeeId;
+    public void setActId(Long actId) {
+        this.actId = actId;
     }
 
-    public void setEmployeeId(String instructor) {
-        this.employeeId = instructor;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }
 

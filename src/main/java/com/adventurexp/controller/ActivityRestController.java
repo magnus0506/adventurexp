@@ -2,8 +2,10 @@ package com.adventurexp.controller;
 
 import com.adventurexp.model.Activity;
 import com.adventurexp.model.Booking;
+import com.adventurexp.model.Employee;
 import com.adventurexp.repository.BookingRepository;
 import com.adventurexp.repository.ActivityRepository;
+import com.adventurexp.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +18,29 @@ public class ActivityRestController {
 
     private final ActivityRepository activityRepository;
     private final BookingRepository bookingRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public ActivityRestController(ActivityRepository activityRepository, BookingRepository bookingRepository) {
-       this.bookingRepository = bookingRepository;
+    public ActivityRestController(ActivityRepository activityRepository, BookingRepository bookingRepository, EmployeeRepository employeeRepository) {
         this.activityRepository = activityRepository;
-
+        this.bookingRepository = bookingRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/activities")
     public List<Activity> findAllActivity() {
-        List<Activity> activity;
-        activity = activityRepository.findAll();
-        return activity;
+
+        return activityRepository.findAll();
     }
 
     @GetMapping("/booking")
     public List<Booking> findAllBookings() {
-        List<Booking> bookingList;
-        bookingList = bookingRepository.findAll();
-        return bookingList;
+        return bookingRepository.findAll();
+
+    }
+
+    @GetMapping("/employees")
+    public List<Employee> findAllEmployees(){
+        return employeeRepository.findAll();
     }
 
 
@@ -49,9 +55,9 @@ public class ActivityRestController {
         }
     }
 
-    @GetMapping("/booking/{act_id}")
-    public ResponseEntity<Booking> findBookedActivity(@PathVariable Long act_id) {
-        Optional<Booking> booking = bookingRepository.findById(act_id);
+    @GetMapping("/booking/{booking_id}")
+    public ResponseEntity<Booking> findBookedActivity(@PathVariable Long booking_id) {
+        Optional<Booking> booking = bookingRepository.findById(booking_id);
         if (booking.isPresent()) {
             Booking booking1 = booking.get();
             return new ResponseEntity<>(booking1, HttpStatus.OK);
@@ -63,8 +69,8 @@ public class ActivityRestController {
 
     @PostMapping(value = "/newbooking", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Booking newBooking(@RequestBody Booking activity) {
-        return bookingRepository.save(activity);
+    public Booking postBooking(@RequestBody Booking booking) {
+        return bookingRepository.save(booking);
     }
 
     @PostMapping(value = "/newactivity", consumes = "application/json")
