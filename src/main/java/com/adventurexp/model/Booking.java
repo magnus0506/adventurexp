@@ -1,7 +1,13 @@
 package com.adventurexp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "booking")
@@ -12,8 +18,13 @@ public class Booking {
     @Column(name = "booking_id")
     private Long bookingId;
 
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(name = "booking_date")
     private Date bookingDate;
+
+    @JsonFormat(pattern = "hh:mm")
+    @Column(name = "booking_time")
+    private Timestamp bookingTime;
 
     @Column(name = "participant_count")
     private int participantCount;
@@ -28,6 +39,10 @@ public class Booking {
 
     public Date getBookingDate() {
         return bookingDate;
+    }
+
+    public Timestamp getBookingTime() {
+        return bookingTime;
     }
 
     public int getParticipantCount() {
