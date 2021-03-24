@@ -49,6 +49,10 @@ public class Booking {
         return participantCount;
     }
 
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
     public Activity getActivity() {
         return activity;
     }
