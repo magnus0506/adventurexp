@@ -70,7 +70,13 @@ public class ActivityRestController {
     @PostMapping(value = "/newbooking", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Booking postBooking(@RequestBody Booking booking) {
-        return bookingRepository.save(booking);
+        if (booking.getBookingTime() != null
+        && booking.getBookingDate() != null
+        && booking.getParticipantCount() != 0
+        && booking.getParticipantCount() <= 50) {
+            return bookingRepository.save(booking);
+        }
+        return null;
     }
 
     @PostMapping(value = "/newactivity", consumes = "application/json")

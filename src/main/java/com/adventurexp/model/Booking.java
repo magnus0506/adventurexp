@@ -18,7 +18,6 @@ public class Booking {
     @Column(name = "booking_id")
     private Long bookingId;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(name = "booking_date")
     private Date bookingDate;
 
