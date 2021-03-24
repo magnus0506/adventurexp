@@ -27,14 +27,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("password")
                 .build();
     }
+
+    @Autowired
+    private CustomIpAuthenticationProvider authenticationProvider;
+
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource());
+//        auth.jdbcAuthentication().dataSource(dataSource());
+        auth.authenticationProvider(authenticationProvider);
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").hasIpAddress("54.234.57.19");
+                .antMatchers("/activities").permitAll();
                 http.csrf().disable();
 
     }

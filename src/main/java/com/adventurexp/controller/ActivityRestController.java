@@ -26,6 +26,7 @@ public class ActivityRestController {
         this.employeeRepository = employeeRepository;
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/activities")
     public List<Activity> findAllActivity() {
 
@@ -53,6 +54,11 @@ public class ActivityRestController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/booking/{booking_id}")
+    public void deleteBooking(@PathVariable Long booking_id){
+        bookingRepository.deleteById(booking_id);
     }
 
     @GetMapping("/booking/{booking_id}")
