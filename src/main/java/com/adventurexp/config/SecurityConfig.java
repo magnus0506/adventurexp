@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").hasIpAddress("54.234.57.19");
+                .antMatchers("/**").hasIpAddress("54.234.57.19:8090");
                 http.csrf().disable();
 
     }
