@@ -32,10 +32,6 @@ public class Booking {
     @JoinColumn(name = "act_id")
     private Activity activity;
 
-    public Long getBookingId() {
-        return bookingId;
-    }
-
     public Date getBookingDate() {
         return bookingDate;
     }
@@ -48,15 +44,23 @@ public class Booking {
         return participantCount;
     }
 
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
-    }
-
     public Activity getActivity() {
         return activity;
     }
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public void setBookingTime(Timestamp bookingTime) {
+        this.bookingTime = bookingTime;
+    }
+
+    public void setParticipantCount(int participantCount) {
+        this.participantCount = participantCount;
     }
 }

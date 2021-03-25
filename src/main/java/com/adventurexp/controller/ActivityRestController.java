@@ -40,7 +40,7 @@ public class ActivityRestController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> findAllEmployees(){
+    public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
     }
 
@@ -56,8 +56,20 @@ public class ActivityRestController {
         }
     }
 
+    @PutMapping("/booking/{booking_id}")
+    public Optional<Booking> putBooking(@PathVariable Long booking_id) {
+        return bookingRepository.findById(booking_id)
+                .map(booking -> {
+                    booking.setBookingDate(booking.getBookingDate());
+                    booking.setBookingTime(booking.getBookingTime());
+                    booking.setParticipantCount(booking.getParticipantCount());
+                    booking.setActivity(booking.getActivity());
+                    return bookingRepository.save(booking);
+                });
+    }
+
     @DeleteMapping("/booking/{booking_id}")
-    public void deleteBooking(@PathVariable Long booking_id){
+    public void deleteBooking(@PathVariable Long booking_id) {
         bookingRepository.deleteById(booking_id);
     }
 
@@ -77,9 +89,9 @@ public class ActivityRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Booking postBooking(@RequestBody Booking booking) {
         if (booking.getBookingTime() != null
-        && booking.getBookingDate() != null
-        && booking.getParticipantCount() != 0
-        && booking.getParticipantCount() <= 50) {
+                && booking.getBookingDate() != null
+                && booking.getParticipantCount() != 0
+                && booking.getParticipantCount() <= 50) {
             return bookingRepository.save(booking);
         }
         return null;
