@@ -5,14 +5,15 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -20,7 +21,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         return DataSourceBuilder
                 .create()
                 .url("jdbc:mysql://54.234.57.19:3306/adventuredb?serverTimezone=UTC")
@@ -30,25 +31,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    private CustomIpAuthenticationProvider authenticationProvider;
-
-    @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource());
-        auth.authenticationProvider(authenticationProvider);
+        auth
+                .jdbcAuthentication()
+                .dataSource(dataSource())
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers(HttpMethod.DELETE).permitAll();
-                http.csrf().disable();
+                .antMatchers("/**").permitAll()
+                .and().formLogin();
+        http.csrf().disable();
 
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
 
 }
