@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "booking")
 public class Booking {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id")
@@ -31,6 +32,10 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "act_id")
     private Activity activity;
+
+    public Long getBookingId() { return bookingId; }
+
+    public void setBookingId(Long bookingId) { this.bookingId = bookingId; }
 
     public Date getBookingDate() {
         return bookingDate;
